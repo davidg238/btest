@@ -11,7 +11,7 @@ main:
 
   print "hello world"
 
-  print "$(factorial 19)"
+  print "$(Factorial 19)"
 /*
   TEST_SUITE_START
 
