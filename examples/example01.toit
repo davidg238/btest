@@ -1,9 +1,11 @@
 
-import ..src.test_util show TEST_START TEST ASSERT_EQ TEST_END
+import ..src.test_util show *
 import .mathfunctions show *
 
 main:
 // test_group_1:
+
+  TEST_SUITE_START
 
   TEST_START
 

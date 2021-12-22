@@ -17,7 +17,7 @@ tot_case_fail := 0
 latch := monitor.Latch
 
 TEST_SUITE_START:
-  latch.set
+  latch.set 0
 
 TEST_START:
   latch.get
@@ -27,7 +27,7 @@ TEST_END:
     print "Tests run/failed: $test/$test_fail Cases run/failed: $tot_case/$tot_case_fail"
     print ""
     print ""
-    latch.set
+    latch.set 0
 
 TEST suite_name/string test_name/string [block] ->none:
     try:
