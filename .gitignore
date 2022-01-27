@@ -1,3 +1,4 @@
 .packages/
+.jaguar
 examples/.packages
 tests/.packages

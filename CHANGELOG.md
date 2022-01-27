@@ -1,3 +1,9 @@
+## 1.0.1 - 2022-01-27
+Fix .gitignore
+
+## 1.0.0 - 2022-01-27
+Add tests. Improve floating point comparisons.
+
 ## 0.1.2 - 2021.12-22
 Runs.  Need to implement TestSuite, improve reporting.
 
