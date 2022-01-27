@@ -1,3 +1,6 @@
+# 1.0.3 - 2022-01-27
+Fix almost_equal_ulps
+
 ## 1.0.1 - 2022-01-27
 Fix .gitignore
 

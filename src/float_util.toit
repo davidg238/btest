@@ -42,13 +42,12 @@ almost_equal_rel a/float b/float maxRelDiff/float=FLT_EPSILON -> bool:
   return diff <= largest*maxRelDiff
 
 almost_equal_ulps a/float b/float maxUlpsDiff=4 -> bool:
-    if not a.sign==b.sign:  
-      return a==b   // since returns true for +0==-0
-    else:
-      uA := FUnion a
-      uB := FUnion b
-      ulpsDiff := (uA.i - uB.i).abs.to_int
-      return ulpsDiff <= maxUlpsDiff
+  uA := FUnion a
+  uB := FUnion b
+  if uA.negative != uB.negative:  // comparing number of differing sign doesn't make sense
+    return a==b                   // returns 0 for the special case of +0 and -0
+  ulpsDiff := (uA.i - uB.i).abs.to_int
+  return ulpsDiff <= maxUlpsDiff
 
 almost_equal_abs_ulps a/float b/float maxDiff/float=FLT_MAX_DIFF maxUlpsDiff/int=4 -> bool:
   // Check if the numbers are really close -- needed
