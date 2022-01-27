@@ -1,96 +1,87 @@
 // Copyright (c) 2021 Ekorau LLC
 
-/*
-This is just enough code to enable the eFLL test suites to be rewritten in Toit, with minimal effort.
-It does NOT import expect.
-*/
+import .float_util show almost_equal_abs_ulps
 
-import monitor
-
-test := 0
+tot_test := 0
 test_fail := 0
 case := 0
 case_fail := 0
 tot_case:= 0
 tot_case_fail := 0
+err_str := ""
 
-latch := monitor.Latch
 
-TEST_SUITE_START:
-  latch.set 0
-
-TEST_START:
-  latch.get
+test_start:
     
-TEST_END:
+test_end:
     print "-----------------------------------------------------"
-    print "Tests run/failed: $test/$test_fail Cases run/failed: $tot_case/$tot_case_fail"
-    print ""
-    print ""
-    latch.set 0
+    print "Tests run/failed: $tot_test/$test_fail Cases run/failed: $tot_case/$tot_case_fail"
+    // latch.set 0
 
-TEST suite_name/string test_name/string [block] ->none:
+test suite_name/string test_name/string [block] ->none:
     try:
-        test++
-        print "Test $test class $suite_name, feature: $test_name"
+        print "Test $tot_test class $suite_name, feature: $test_name"
         case = 0
         case_fail = 0
         exception := catch:
             block.call
         if exception:
-            case++ // since unwound during the exception
             print "      Case $case threw, $exception"
+            print "       (No further cases run in this suite)"
+            case++ // since unwound during the exception
             case_fail++
+            // print "c/c_f  $case / $case_fail"
     finally:
         test_finished
 
-ASSERT_EQ expected/int val/int ->none:
-    case++
+test_finished -> none:
+    print "  run: $case failed: $case_fail"
+    tot_test++
+    tot_case = tot_case + case
+    if case_fail > 0: 
+        test_fail++
+        tot_case_fail = tot_case_fail + case_fail
+
+expect_equals expected/int val/int ->none:
     if expected != val:
         print_err "expected $expected but got $val" 
         case_fail++
-
-ASSERT_FLOAT_EQ expected/float val/float ->none:
     case++
-    if ((expected - val).abs > 0.001):  
-    //todo, refer https://stackoverflow.com/questions/4915462/how-should-i-do-floating-point-comparison
-    //      move comparison function to geometry + check implications there ... colinear, intersection
+
+expect_near expected/float val/float ->none:
+    if not almost_equal_abs_ulps expected val:  
         print_err "expected $(%.7f expected) but got $(%.7f val)" 
         case_fail++
-
-ASSERT_NOT_NULL val/any ->none:
     case++
+
+expect_not_null val/any ->none:
     if val == null:
         print_err "expected non-null value" 
         case_fail++
-
-ASSERT_RUNS [block] ->none:
     case++
+
+expect_runs [block] ->none:
     exception := catch:
         block.call
     if exception:
         print_err "threw $exception"
         case_fail++
-
-ASSERT_FALSE val/bool ->none:
     case++
-    if false != val:
-        print_err "expected false but got $val"     
-        case_fail++
 
-ASSERT_TRUE val/bool ->none:
-    case++
-    if true != val:
-        print_err "expected true but got $val"     
+expect_false [condition] -> none:
+    if condition.call:
+        print_err "expected false"     
         case_fail++
+    case++
+
+expect_true [condition] -> none:
+    if not condition.call:
+        print_err "expected true"     
+        case_fail++
+    case++
 
 print_err msg/string -> none:
     print "      Case $case failed, $msg" 
 
-test_finished -> none:
-    print "  run: $case failed: $case_fail"
-    print ""
-    tot_case = tot_case + case
-    if case_fail > 0: 
-        test_fail++
-        tot_case_fail = tot_case_fail + case_fail
+
+

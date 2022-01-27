@@ -3,14 +3,11 @@ import ..src.test_util show *
 import .mathfunctions show *
 
 main:
-// test_group_1:
 
-  TEST_SUITE_START
+  test_start
 
-  TEST_START
-
-  TEST "FactorialTest" "HandlesZeroInput":
-
-      ASSERT_EQ 1 1
+  test "FactorialTest" "HandlesZeroInput":
+  
+    expect_true: true
  
-  TEST_END
+  test_end
