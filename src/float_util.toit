@@ -28,7 +28,7 @@ class FUnion:
 
   constructor .f:
     raw_mantissa = f.bits & ((1 << 52)-1)
-    raw_exponent = f.bits >>> 52
+    raw_exponent = (f.bits >> 52) & 0x7FF
     i = f.bits
 
   negative -> bool: return i < 0
