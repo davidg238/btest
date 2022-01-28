@@ -1,5 +1,4 @@
-import ..src.test_util show *
-import ..src.float_util show *
+import btest show *
 
 
 main:
@@ -38,8 +37,7 @@ main:
     expect_true: [false]
 
   test "false, 2" "pass/fail 1/1":
-    expect_false: [false] 
+    expect_false: [false]
     expect_false: [true]
 
   test_end
-

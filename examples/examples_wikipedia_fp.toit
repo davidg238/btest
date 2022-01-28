@@ -1,11 +1,13 @@
-import ..src.float_util show *
+// Copyright (c) 2021 Ekorau LLC
+
+import btest.float_util show *
 main:
 
   print_comparisons := : | num |
     print "$((FUnion num).stringify) / $num"
 /*
- See the examples listed at https://en.wikipedia.org/wiki/Double-precision_floating-point_format
- (Not reproduced completely)
+See the examples listed at https://en.wikipedia.org/wiki/Double-precision_floating-point_format
+(Not reproduced completely)
  */
   print "various examples ...."
   print_comparisons.call 1.0
@@ -35,4 +37,3 @@ main:
   print "diff_ulps $(diff_ulps FLT_NZERO float.MIN_POSITIVE)"
   print "diff_ulps $(diff_ulps FLT_PZERO float.MIN_POSITIVE)"
 
-  

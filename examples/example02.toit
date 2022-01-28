@@ -1,6 +1,8 @@
-import ..src.test_util show *
-import .mathfunctions show *
-import ..src.float_util show *
+// Copyright (c) 2021 Ekorau LLC
+
+import btest show *
+import .mathfunctions
+
 main:
 
   nums := [0.3, 0.29, 0.299, 0.299_999, 0.299_999_999, 0.299_999_999_999, 0.299_999_999_999_999,]
