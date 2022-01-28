@@ -5,10 +5,10 @@ main:
 
   print_comparisons := : | num |
     print "$((FUnion num).stringify) / $num"
-/*
-See the examples listed at https://en.wikipedia.org/wiki/Double-precision_floating-point_format
-(Not reproduced completely)
- */
+  /*
+  See the examples listed at https://en.wikipedia.org/wiki/Double-precision_floating-point_format
+  (Not reproduced completely)
+  */
   print "various examples ...."
   print_comparisons.call 1.0
   print_comparisons.call 1.0000000000000002
