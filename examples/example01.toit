@@ -1,5 +1,6 @@
+// Copyright (c) 2021 Ekorau LLC
 
-import ..src.test_util show *
+import btest show *
 import .mathfunctions show *
 
 main:
@@ -7,7 +8,7 @@ main:
   test_start
 
   test "FactorialTest" "HandlesZeroInput":
-  
+
     expect_true: true
- 
+
   test_end

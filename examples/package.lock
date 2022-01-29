@@ -1,0 +1,5 @@
+prefixes:
+  btest: ..
+packages:
+  ..:
+    path: ..
