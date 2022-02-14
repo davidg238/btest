@@ -1,3 +1,6 @@
+# 1.0.4 - 2022-02-14
+Documentation.
+
 # 1.0.3 - 2022-01-27
 Fix almost_equal_ulps
 

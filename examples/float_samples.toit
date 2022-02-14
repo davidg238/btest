@@ -1,4 +1,6 @@
-// Copyright (c) 2021 Ekorau LLC
+// Copyright (c) 2022 Ekorau LLC
+// Use of this source code is governed by a Zero-Clause BSD license that can
+// be found in the examples/LICENSE file.
 
 import btest show *
 import .mathfunctions

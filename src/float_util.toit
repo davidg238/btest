@@ -1,6 +1,7 @@
-// Copyright (c) 2021 Ekorau LLC
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file.
+
+// Copyright (c) 2021 Ekorau LLC
 
 /*
 Some helper functions for Toit floats (size 64-bit).
@@ -27,7 +28,7 @@ class FUnion:
   i/int
 
   constructor .f:
-    raw_mantissa = f.bits & ((1 << 52)-1)
+    raw_mantissa = ((1 << 52)-1)  & f.bits
     raw_exponent = (f.bits >> 52) & 0x7FF
     i = f.bits
 
