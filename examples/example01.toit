@@ -8,31 +8,31 @@ import .mathfunctions show *
 main:
 
   // Mark the start of the group of tests
-  test_start
+  test-start
 
   // Test the factorial function handles input 0
   test "factorial" "HandlesZeroInput":
 
-    expect_runs: factorial 0
+    expect-runs: factorial 0
 
   // Test the factorial function handles input negative inputs
   test "factorial" "HandlesNegativeInput":
 
-    expect_throws: factorial -1
-    expect_runs:   factorial 6
+    expect-throws: factorial -1
+    expect-runs:   factorial 6
 
   // Test the factorial function handles various inputs
   test "factorial" "HandlesInput":
 
-    expect_equals   1 (factorial 0)
-    expect_equals   1 (factorial 1)
-    expect_equals   2 (factorial 2)
-    expect_equals   6 (factorial 3)
-    expect_equals  24 (factorial 4)
-    expect_equals 120 (factorial 5)
+    expect-equals   1 (factorial 0)
+    expect-equals   1 (factorial 1)
+    expect-equals   2 (factorial 2)
+    expect-equals   6 (factorial 3)
+    expect-equals  24 (factorial 4)
+    expect-equals 120 (factorial 5)
 
   // Mark the end of the group of tests, a testing summary is printed here
-  test_end
+  test-end
 
 
 /**

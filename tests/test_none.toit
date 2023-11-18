@@ -6,5 +6,5 @@
 import btest show *
 
 main:
-  test_start
-  test_end
+  test-start
+  test-end

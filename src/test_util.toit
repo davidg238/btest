@@ -16,109 +16,110 @@ A collection of test suites runs between `test_start` and `test_end` functions.
 Testing does not stop at first failure.
 */
 
-import .float_util show almost_equal_abs_ulps
+import .float-util show almost-equal-abs-ulps
 
-tot_test := 0
-test_fail := 0
+tot-test := 0
+test-fail := 0
 case := 0
-case_fail := 0
-tot_case:= 0
-tot_case_fail := 0
-err_str := ""
+case-fail := 0
+tot-case:= 0
+tot-case-fail := 0
+err-str := ""
 
 /// Begin tests with this marker.
-test_start:
+test-start:
 
 /** 
 Conclude tests with this marker. A summary of test results are reported to the console.
 */
-test_end:
+test-end:
   print "-----------------------------------------------------"
-  print "Tests run/failed: $tot_test/$test_fail Cases run/failed: $tot_case/$tot_case_fail"
+  print "Tests run/failed: $tot-test/$test-fail Cases run/failed: $tot-case/$tot-case-fail"
 
 /**
 A block of tests, which test some feature of a class behavior.
 If an exception is thrown within a test, further tests within the block, will not be executed.
 */
-test suite_name/string test_name/string [block] ->none:
+test suite-name/string test-name/string [block] ->none:
   try:
-    print "Test $tot_test class $suite_name, feature: $test_name"
+    print "Test $tot-test class $suite-name, feature: $test-name"
     case = 0
-    case_fail = 0
+    case-fail = 0
     exception := catch:
       block.call
     if exception:
       print "      Case $case threw, $exception"
       print "       (No further cases run in this suite)"
       case++ // Since unwound during the exception.
-      case_fail++
+      case-fail++
   finally:
-    test_finished_
+    test-finished_
 
 /// Test if the argument is not null.
-expect_not_null val/any ->none:
+expect-not-null val/any ->none:
   if val == null:
-    print_err_ "expected non-null value"
-    case_fail++
+    print-err_ "expected non-null value"
+    case-fail++
   case++
 
 /// Test if the argument is true
-expect_true val -> none:
+expect-true val -> none:
   if not val:
-    print_err_ "expected true"
-    case_fail++
+    print-err_ "expected true"
+    case-fail++
   case++
 
 /// Test if the argument is false
-expect_false val -> none:
+expect-false val -> none:
   if val:
-    print_err_ "expected false"
-    case_fail++
+    print-err_ "expected false"
+    case-fail++
   case++
 
 /// Test if the two integer arguments are equal.
-expect_equals expected/int val/int ->none:
+expect-equals expected/int val/int ->none:
   if expected != val:
-    print_err_ "expected $expected but got $val"
-    case_fail++
+    print-err_ "expected $expected but got $val"
+    case-fail++
   case++
 
 /**
 Test if the two float arguments are "near".
 Refer to float_util/almost_equal_abs_ulps.
 */
-expect_near expected/float val/float ->none:
-  if not almost_equal_abs_ulps expected val:
-    print_err_ "expected $(%.7f expected) but got $(%.7f val)"
-    case_fail++
+expect-near expected/float val/float ->none:
+  if not almost-equal-abs-ulps expected val:
+    how-big := (expected == 0.0)? "$(%.2f (expected - val))": "$(%.2f (expected - val) * 100 / expected) %"
+    print-err_ "expected $(%.7f expected) but got $(%.7f val), err: $how-big" 
+    case-fail++
   case++
 
 /// Test if the block argument runs without error.
-expect_runs [block] ->none:
+expect-runs [block] ->none:
   exception := catch:
     block.call
   if exception:
-    print_err_ "threw $exception"
-    case_fail++
+    print-err_ "threw $exception"
+    case-fail++
   case++
 
 /// Test if the block argument throws an exception during evaluation.
-expect_throws [block] ->none:
+expect-throws [block] ->none:
   exception := catch:
     block.call
   if not exception:
-    case_fail++
-    print_err_ "no exception thrown"
+    case-fail++
+    print-err_ "no exception thrown"
   case++
 
 // -- Internal helper methods --
-test_finished_ -> none:
-  print "  run: $case failed: $case_fail"
-  tot_test++
-  tot_case = tot_case + case
-  if case_fail > 0:
-    test_fail++
-    tot_case_fail = tot_case_fail + case_fail
+test-finished_ -> none:
+  print "  run: $case failed: $case-fail"
+  tot-test++
+  tot-case = tot-case + case
+  if case-fail > 0:
+    test-fail++
+    tot-case-fail = tot-case-fail + case-fail
 
-print_err_ msg/string -> none:
+print-err_ msg/string -> none:
   print "      Case $case failed, $msg"

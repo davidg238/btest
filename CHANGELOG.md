@@ -1,3 +1,6 @@
+# 1.1.0 - 2023-11-18
+Change to snake-case; spaces required around "-" math operator
+
 # 1.0.4 - 2022-02-14
 Documentation.
 

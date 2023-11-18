@@ -15,21 +15,21 @@ Refer:
   Inline usage guidance taken from 2)
 
 */
-FLT_PZERO := float.from_bits 0x0 // +0
-FLT_NZERO := float.from_bits 0x8000_0000_0000_0000 // -0
-FLT_EPSILON  := 0.000000119209290 // For 32bit.
-FLT_MAX_DIFF := 0.000001          // Good enough?
+FLT-PZERO := float.from-bits 0x0 // +0
+FLT-NZERO := float.from-bits 0x8000_0000_0000_0000 // -0
+FLT-EPSILON  := 0.000000119209290 // For 32bit.
+FLT-MAX-DIFF := 0.000001          // Good enough?
 
 // Floats are 64-bit doubles
 class FUnion:
-  raw_mantissa/int
-  raw_exponent/int
+  raw-mantissa/int
+  raw-exponent/int
   f/float
   i/int
 
   constructor .f:
-    raw_mantissa = ((1 << 52)-1)  & f.bits
-    raw_exponent = (f.bits >> 52) & 0x7FF
+    raw-mantissa = ((1 << 52) - 1)  & f.bits
+    raw-exponent = (f.bits >> 52) & 0x7FF
     i = f.bits
 
   negative -> bool: return i < 0
@@ -37,43 +37,43 @@ class FUnion:
   stringify -> string:
     return "$(%x i)"
 
-almost_equal_rel a/float b/float max_rel_diff/float=FLT_EPSILON -> bool:
+almost-equal-rel a/float b/float max-rel-diff/float=FLT-EPSILON -> bool:
   // Calculate the difference.
   diff := (a - b).abs
   am := a.abs
   bm := b.abs
   // Find the largest.
   largest := bm>am ? b : a
-  return diff <= largest*max_rel_diff
+  return diff <= largest*max-rel-diff
 
-almost_equal_ulps a/float b/float max_ulps_diff=4 -> bool:
+almost-equal-ulps a/float b/float max-ulps-diff=4 -> bool:
   uA := FUnion a
   uB := FUnion b
   if uA.negative != uB.negative:  // Comparing number of differing sign doesn't make sense
     return a == b                 // Returns true for the special case of +0 and -0.
-  ulps_diff := (uA.i - uB.i).abs
-  return ulps_diff <= max_ulps_diff
+  ulps-diff := (uA.i - uB.i).abs
+  return ulps-diff <= max-ulps-diff
 
-almost_equal_abs_ulps a/float b/float max_diff/float=FLT_MAX_DIFF max_ulps_diff/int=4 -> bool:
+almost-equal-abs-ulps a/float b/float max-diff/float=FLT-MAX-DIFF max-ulps-diff/int=4 -> bool:
   // Check if the numbers are really close -- needed
   // when comparing numbers near zero.
-  return (a-b).abs <= max_diff or
-      almost_equal_ulps a b max_ulps_diff
+  return (a - b).abs <= max-diff or
+      almost-equal-ulps a b max-ulps-diff
 
-almost_equal_abs_rel a/float b/float max_diff/float=FLT_MAX_DIFF max_rel_diff/float=FLT_EPSILON -> bool:
+almost-equal-abs-rel a/float b/float max-diff/float=FLT-MAX-DIFF max-rel-diff/float=FLT-EPSILON -> bool:
   // Check if the numbers are really close -- needed
   // when comparing numbers near zero.
   diff := (a - b).abs
-  if diff <= max_diff: return true
+  if diff <= max-diff: return true
   aa := a.abs
   ba := b.abs
   largest := ba > aa ? b : a
-  return diff <= largest * max_rel_diff
+  return diff <= largest * max-rel-diff
 
 /// ------------------ not for production, for understanding ------------------
-diff_ulps a/float b/float -> int:
+diff-ulps a/float b/float -> int:
   uA := FUnion a
   uB := FUnion b
   if uA.negative != uB.negative:  // Comparing number of differing sign doesn't make sense
     return (a==b)? 0: -1          // Returns 0 for the special case of +0 and -0
-  return (uA.i - uB.i).abs.to_int
+  return (uA.i - uB.i).abs.to-int
