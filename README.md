@@ -6,5 +6,5 @@ A minimal set of test functions, to:
  - test for execution
  - provide a simple run/fail summary
 
-
+Created to support porting of https://github.com/alvesoaj/eFLL test cases, with fewest changes
 
